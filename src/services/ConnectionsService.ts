@@ -25,7 +25,7 @@ class ConnectionService {
     }
 
     findByUserId = async (user_id: string) => {
-        const connection = await this.connectionRepository.findOne({ user_id });
+        const connection = await this.connectionRepository.findOne({where: { user_id } });
         return connection;
     }
 
@@ -35,6 +35,14 @@ class ConnectionService {
             { where:
                 { admin_id: null },
                 relations: ['user']
+            });
+        return connection;
+    }
+
+    findBySocketId = async (socket_id: string) => {
+        const connection = await this.connectionRepository.findOne(
+            { where:
+                { admin_id: socket_id }, relations: ['user']
             });
         return connection;
     }

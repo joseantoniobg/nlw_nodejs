@@ -65,6 +65,7 @@ document.querySelector("#start_chat").addEventListener("click", (event) => {
         })
 
         socket_admin_id = socket_id;
+        console.log(socket_admin_id);
 
         document.getElementById('messages').innerHTML += rendered;
 
@@ -72,17 +73,17 @@ document.querySelector("#start_chat").addEventListener("click", (event) => {
 });
 
 document.querySelector('#send_message_button').addEventListener('click', (event) => {
-    const text = document.getElementById('message_user');
+    const text = document.getElementById('message_user').value;
     const params = {
         socket_admin_id,
         text
     }
     socket.emit('client_send_to_admin', params);
 
-    const template_client = document.getElementById('message-user-template');
+    const template_client = document.getElementById('message-user-template').innerHTML;
 
-    const rendered = Mutache.render(template_client, {
-        message: text.value,
+    const rendered = Mustache.render(template_client, {
+        text: text.value,
         email: email_user,
     })
 

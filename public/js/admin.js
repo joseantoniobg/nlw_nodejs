@@ -84,7 +84,7 @@ function sendMessage(id) {
   const createDiv = document.createElement("div");
   createDiv.className = "admin_message_admin";
   createDiv.innerHTML = `Atendente: <span>${params.text}</span>`;
-  createDiv.innerHTML += `<span class="admin_date>${dayjs().format(
+  createDiv.innerHTML += `<span class="admin_date">${dayjs().format(
     "DD/MM/YYYY HH:mm:ss"
   )}`;
 
@@ -93,11 +93,9 @@ function sendMessage(id) {
   text.value = "";
 }
 
-socket.on("admin_receive_message", (data) => {
+socket.on("admin_receive_message", async (data) => {
 
-  const connection = connectionsUsers.find(
-    (connection) => (connection.socket_id = data.socket_id)
-  );
+  const connection = data.connection;
 
   const divMessages = document.getElementById(
     `allMessages${connection.user_id}`
